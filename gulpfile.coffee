@@ -116,6 +116,13 @@ gulp.task 'clean', (cb) ->
   del $config.output.root, cb
 
 
+gulp.task 'bower:info', ->
+  wiredep = require 'wiredep'
+  excludes = require('./bower.json')['exclude']
+  wiredep exclude: excludes
+  gutil.log excludes
+  
+
 gulp.task 'default', (cb) ->
   gulpsync 'clean', ['scripts', 'styles'], 'inject', 'serve', 'watch', cb
 

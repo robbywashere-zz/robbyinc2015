@@ -1,5 +1,6 @@
 
-bower = require('wiredep')({})
+excludes = require('../bower.json')['exclude']
+bower = require('wiredep')(exclude: excludes)
 
 module.exports =
 
