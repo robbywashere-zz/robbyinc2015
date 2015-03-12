@@ -2,7 +2,7 @@
 
 gulp = require 'gulp'
 
-gulpsync = require 'run-sequence'
+gulp_sync = require 'run-sequence'
 
 $require = require 'rekuire'
 
@@ -11,7 +11,6 @@ $config = $require 'config/config'
 path = require 'path'
 
 browserify = require 'browserify'
-
 
 through = require 'through2'
 
@@ -26,16 +25,15 @@ concat = require 'gulp-concat'
 uglify = require 'gulp-uglify'
 sass = require 'gulp-sass'
 css_min = require 'gulp-cssmin'
-
 gulp_data = require 'gulp-data'
+
+size = require('gulp-size')
 
 
 $data = ->
   delete require.cache[$require.path('app/data')]
   $require('app/data')
     
-  
-
 
 browser_sync = require 'browser-sync'
 
@@ -50,12 +48,14 @@ $error_handler = (err) ->
   gutil.log err
   @emit 'end'
 
+
 $print = through.obj (file,enc,cb) ->
   console.log file.contents.toString()
   @push file
   do cb
 
 $js_dest = -> gulp.dest path.join($config.output.root, $config.output.assets.js)
+
 $css_dest = -> gulp.dest path.join($config.output.root, $config.output.assets.css)
 
 
@@ -75,8 +75,6 @@ $js_compiled_min = ->
 $css_compiled_min = ->
   src = path.join($config.output.root,$config.output.assets.css,$config.output.build.css)
   gulp.src(src, read: false)
-
-
 
 
 $bfy = -> new through.obj (file,enc,cb) ->
@@ -119,19 +117,27 @@ gulp.task 'clean', (cb) ->
 gulp.task 'bower:info', ->
   wiredep = require 'wiredep'
   excludes = require('./bower.json')['exclude']
-  wiredep exclude: excludes
-  gutil.log excludes
+  bower = wiredep exclude: excludes
+
+  Object.keys(bower).forEach (key) ->
+    if Array.isArray(bower[key])
+      console.log gutil.colors.magenta("Bower " + key + ":")
+      console.log gutil.colors.yellow(bower[key].join("\n")), "\n"
+
+  console.log gutil.colors.magenta("Bower excluding:")
+  console.log gutil.colors.red(excludes.join("\n")), "\n"
+
   
 
 gulp.task 'default', (cb) ->
-  gulpsync 'clean', ['scripts', 'styles'], 'inject', 'serve', 'watch', cb
+  gulp_sync 'clean', ['scripts', 'styles'], 'inject', 'serve', 'watch', cb
 
 gulp.task 'prod', (cb) ->
-  gulpsync 'clean', ['scripts', 'styles'], 'uglify', 'inject.min', cb
+  gulp_sync 'clean', ['scripts', 'styles'], 'uglify', 'inject.min', cb
 
-gulp.task 'scripts', ['scripts:coffee','scripts:ng-jade','scripts:vendor'], ->
+gulp.task 'scripts', ['scripts:coffee','scripts:ng-jade','scripts:vendor']
 
-gulp.task 'styles', ['styles:sass']
+gulp.task 'styles', ['styles:sass','styles:vendor']
 
 gulp.task 'uglify', ['uglify:js', 'uglify:css'], ->
 
@@ -140,7 +146,25 @@ gulp.task 'uglify:js', ->
     .on 'error', $error_handler
     .pipe concat($config.output.build.js)
     .pipe do uglify
+    .pipe size showFiles: true, gzip: true
     .pipe do $js_dest
+
+
+#gulp.task 'scripts:vendor', ['scripts:vendor:css', 'bundle_vendor:js']
+
+gulp.task 'styles:vendor', ->
+    gulp.src $config.input.vendor_css
+      .pipe do sourcemaps.init
+      .pipe concat $config.output.compiled.vendor_css
+      .pipe do sourcemaps.write
+      .pipe do $css_dest
+
+gulp.task 'scripts:vendor', ->
+    gulp.src $config.input.vendor_js
+      .pipe do sourcemaps.init
+      .pipe concat $config.output.compiled.vendor_js
+      .pipe do sourcemaps.write
+      .pipe do $js_dest
 
 
 gulp.task 'uglify:css', ->
@@ -148,6 +172,7 @@ gulp.task 'uglify:css', ->
     .on 'error', $error_handler
     .pipe concat($config.output.build.css)
     .pipe do css_min
+    .pipe size showFiles: true, gzip: true
     .pipe do $css_dest
 
 gulp.task 'scripts:ng-jade', ->

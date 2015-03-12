@@ -3,11 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "license": "MIT",
-  "exclude":[
-      "bower_components/bootstrap-sass/dist/css",
-      "bower_components/bootstrap-sass/dist/js"
+  "exclude": [
+    "bower_components/bootstrap-sass/dist/css",
+    "bower_components/bootstrap-sass/dist/js"
   ],
-
   "ignore": [
     "**/.*",
     "node_modules",
@@ -37,6 +36,7 @@
     "angular-loading-bar": "~0.6.0",
     "jquery-ui": "~1.11.2",
     "fontawesome": "~4.3.0",
-    "angular-devise": "~1.0.2"
+    "angular-devise": "~1.0.2",
+    "angular-material": "master"
   }
 }

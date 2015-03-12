@@ -66,10 +66,9 @@ module.exports =
       css: "build.css"
 
     compiled:
-      prefix: 'compiled'
-      vendor_js: "compiled.1.vendor_js.js"
-      templates: "compiled.2.templates.js"
-      coffee: "compiled.3.coffee.js"
-      vendor_css: "compiled.1.css.css"
-      sass: "compiled.2.sass.css"
+      vendor_js: "compiled.0.vendor_js.js"
+      vendor_css: "compiled.0.css.css"
+      templates: "compiled.1.templates.js"
+      coffee: "compiled.2.coffee.js"
+      sass: "compiled.1.sass.css"
 
