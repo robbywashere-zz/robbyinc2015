@@ -84,6 +84,7 @@ $bfy = -> new through.obj (file,enc,cb) ->
 gulp.task 'inject', ->
 
   gulp.src $config.input.index
+    .pipe do jade
     .pipe inject(do $js_compiled, ignorePath: $config.output.root)
     .pipe inject(do $css_compiled, ignorePath: $config.output.root)
     #.pipe $print
@@ -93,6 +94,7 @@ gulp.task 'inject', ->
 gulp.task 'inject.min', ->
 
   gulp.src $config.input.index
+    .pipe do jade
     .pipe inject(do $js_compiled_min, ignorePath: $config.output.root)
     .pipe inject(do $css_compiled_min, ignorePath: $config.output.root)
     #.pipe $print

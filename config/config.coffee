@@ -19,7 +19,7 @@ module.exports =
     index: ["app/index.html "]
 
   input:
-    index: "app/index.html"
+    index: "app/index.jade"
     img:  "app/static/img/*"
     fonts: "app/static/fonts/*"
     sprites: "app/static/sprites/*"

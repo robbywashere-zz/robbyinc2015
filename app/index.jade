@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    base(href='/')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // inject:css
+    // endinject
+    // inject:js
+    // endinject
+  |   
+  body(ng-app='myApp')
+    #content
+      ng-include#app(src="'ng-app.html'")
