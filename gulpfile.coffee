@@ -27,6 +27,15 @@ uglify = require 'gulp-uglify'
 sass = require 'gulp-sass'
 css_min = require 'gulp-cssmin'
 
+gulp_data = require 'gulp-data'
+
+
+$data = ->
+  delete require.cache[$require.path('app/data')]
+  $require('app/data')
+    
+  
+
 
 browser_sync = require 'browser-sync'
 
@@ -84,6 +93,7 @@ $bfy = -> new through.obj (file,enc,cb) ->
 gulp.task 'inject', ->
 
   gulp.src $config.input.index
+    .pipe gulp_data($data)
     .pipe do jade
     .pipe inject(do $js_compiled, ignorePath: $config.output.root)
     .pipe inject(do $css_compiled, ignorePath: $config.output.root)
@@ -94,6 +104,7 @@ gulp.task 'inject', ->
 gulp.task 'inject.min', ->
 
   gulp.src $config.input.index
+    .pipe gulp_data($data)
     .pipe do jade
     .pipe inject(do $js_compiled_min, ignorePath: $config.output.root)
     .pipe inject(do $css_compiled_min, ignorePath: $config.output.root)
@@ -134,6 +145,7 @@ gulp.task 'uglify:css', ->
 
 gulp.task 'scripts:ng-jade', ->
   gulp.src $config.input.templates
+    .pipe gulp_data($data)
     .pipe do jade
     .on 'error', $error_handler
     .pipe ng_template(standalone: true)
@@ -185,6 +197,7 @@ gulp.task "serve", ->
     server:
       baseDir: $config.output.root
     port: 8888
+    open: false
 
 
 
@@ -192,6 +205,8 @@ gulp.task "watch", ->
   gulp.watch $config.watch.sass, ['styles:sass', browser_sync.reload]
   gulp.watch $config.watch.coffee, ['scripts:coffee', browser_sync.reload]
   gulp.watch $config.watch.templates, ['scripts:ng-jade', browser_sync.reload]
+  gulp.watch $config.watch.data, ['scripts:ng-jade','inject', browser_sync.reload]
+  gulp.watch $config.watch.index, ['inject', browser_sync.reload]
   
 
 gulp.task "auto", ->

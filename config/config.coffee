@@ -16,7 +16,8 @@ module.exports =
       "app/templates/*.jade"
       "app/templates/**/*.jade"
     ]
-    index: ["app/index.html "]
+    index: ["app/index.jade "]
+    data: ["app/data/**"]
 
   input:
     index: "app/index.jade"

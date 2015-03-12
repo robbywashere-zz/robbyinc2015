@@ -1,6 +1,8 @@
 doctype html
 html
   head
+    title 
+      | #{title}
     base(href='/')
     |     
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -10,5 +12,7 @@ html
     // endinject
   |   
   body(ng-app='myApp')
+    h1 #{title}
+    h2 #{heading}
     #content
       ng-include#app(src="'ng-app.html'")
