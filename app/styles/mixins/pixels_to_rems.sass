@@ -6,15 +6,9 @@
 @function parseInt($n)
     @return $n / ($n * 0 + 1)
 
-=rem($property, $values, $important:"")
+=rem($property, $values, $impString:"")
     $px: ()
     $rem: ()
-
-    $impString: ""
-    @if $important == "important" 
-        || $important == "!important" 
-        || $important == true
-        $impString: "!important"
 
     @each $value in $values
 

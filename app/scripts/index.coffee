@@ -42,10 +42,16 @@ app.config ($stateProvider, $locationProvider, $urlRouterProvider) ->
     .state 'noauth.root',
       url: '/',
       template: 'No Auth Root'
+      controller: ($state) ->
+        $state.go 'auth.app',
 
     .state 'noauth.login',
       url: '/login',
       template: 'Login'
+
+    .state 'auth.addUser',
+      url: '/add-user',
+      template: 'add user'
 
     .state 'auth.app',
       url: '/app',

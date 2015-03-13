@@ -24,6 +24,8 @@ inject = require 'gulp-inject'
 concat = require 'gulp-concat'
 uglify = require 'gulp-uglify'
 sass = require 'gulp-sass'
+ruby_sass = require 'gulp-ruby-sass'
+
 css_min = require 'gulp-cssmin'
 gulp_data = require 'gulp-data'
 
@@ -135,16 +137,22 @@ gulp.task 'bower:info', ->
   
 
 gulp.task 'default', (cb) ->
-  gulp_sync 'clean', ['scripts', 'styles'], 'inject', 'serve', 'watch', cb
+  gulp_sync 'clean', ['scripts', 'styles', 'copy'], 'inject', 'serve', 'watch', cb
 
 gulp.task 'prod', (cb) ->
-  gulp_sync 'clean', ['scripts', 'styles'], 'uglify', 'inject.min', cb
+  gulp_sync 'clean', ['scripts', 'styles', 'copy'], 'uglify', 'inject.min', cb
 
 gulp.task 'scripts', ['scripts:coffee','scripts:ng-jade','scripts:vendor']
 
 gulp.task 'styles', ['styles:sass','styles:vendor']
 
 gulp.task 'uglify', ['uglify:js', 'uglify:css'], ->
+
+
+gulp.task 'copy', ->
+  gulp.src($config.input.fonts)
+    .pipe(gulp.dest(path.join($config.output.root,$config.output.assets.fonts)))
+
 
 gulp.task 'uglify:js', ->
   $js_compiled(true)
@@ -156,6 +164,13 @@ gulp.task 'uglify:js', ->
 
 
 #gulp.task 'scripts:vendor', ['scripts:vendor:css', 'bundle_vendor:js']
+
+gulp.task 'styles:vendor', ->
+    gulp.src $config.input.vendor_css
+      .pipe do sourcemaps.init
+      .pipe concat $config.output.compiled.vendor_css
+      .pipe do sourcemaps.write
+      .pipe do $css_dest
 
 gulp.task 'styles:vendor', ->
     gulp.src $config.input.vendor_css

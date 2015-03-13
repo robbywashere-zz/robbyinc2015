@@ -23,7 +23,7 @@ module.exports =
   input:
     index: "app/index.jade"
     img:  "app/static/img/*"
-    fonts: "app/static/fonts/*"
+    fonts: "app/fonts/*"
     sprites: "app/static/sprites/*"
 
     coffee: [
@@ -36,9 +36,11 @@ module.exports =
 
     sass_loadpath: [
       "app/styles/lib/"
-      "bower_componentns/app/assets/stylesheets/"
-      "bower_components/bootstrap-sass/lib/"
-      "bower_components/bourbon/dist/"
+      #"bower_components/app/assets/stylesheets/"
+      "bower_components/bootstrap-sass/vendor/assets/stylesheets"
+      "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap"
+      #"bower_components/bootstrap-sass/lib/"
+      #"bower_components/bourbon/dist/"
       "bower_components/bourbon/app/assets/stylesheets"
       "bower_components/"
     ]
