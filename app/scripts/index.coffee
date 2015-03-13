@@ -1,5 +1,6 @@
-require('./lib/module.coffee')
-app = angular.module('myApp',[ 'templates''ui.router','templates','angular-loading-bar','Devise'])
+require('./app/scripts/lib/module.coffee')
+
+app = angular.module('myApp',[ 'templates','ui.router','templates','angular-loading-bar','Devise'])
 
 app.config ($stateProvider, $locationProvider, $urlRouterProvider) ->
 

@@ -5,6 +5,7 @@ Workaround to make defining and retrieving angular modules easier and more intui
 # Courtesy of:  http://www.hiddentao.com/archives/2013/11/04/an-improved-angular-module-split-your-modules-into-multiple-files/
 ## 
 
+
 ((angular) ->
   origMethod = angular.module
   alreadyRegistered = {}
