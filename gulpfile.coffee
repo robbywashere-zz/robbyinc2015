@@ -34,6 +34,8 @@ $data = ->
   delete require.cache[$require.path('app/data')]
   $require('app/data')
     
+  
+
 
 browser_sync = require 'browser-sync'
 
