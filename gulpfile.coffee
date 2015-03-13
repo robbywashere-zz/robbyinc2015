@@ -33,8 +33,8 @@ size = require('gulp-size')
 
 
 $data = ->
-  delete require.cache[$require.path('app/data')]
-  $require('app/data')
+  delete require.cache[$require.path('app/templates/data')]
+  $require('app/templates/data')
     
   
 
@@ -204,6 +204,7 @@ gulp.task 'scripts:ng-jade', ->
     .on 'error', $error_handler
     .pipe rename($config.output.compiled.templates)
     .pipe do $js_dest
+    #.pipe $print
   
 
 gulp.task 'config', ->

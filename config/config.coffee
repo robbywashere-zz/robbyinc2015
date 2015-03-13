@@ -18,7 +18,7 @@ module.exports =
       "app/templates/**/*.jade"
     ]
     index: ["app/index.jade "]
-    data: ["app/data/**"]
+    data: ["app/templates/data/**"]
 
   input:
     index: "app/index.jade"
@@ -51,6 +51,8 @@ module.exports =
       "app/templates/*.jade"
       "app/templates/**/*.jade"
       "!app/templates/lib/**"
+      "!app/templates/_*.jade"
+      "!app/templates/**/_*.jade"
     ]
 
   output:

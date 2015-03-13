@@ -18,9 +18,9 @@ app.config ($stateProvider, $locationProvider, $urlRouterProvider) ->
       url: '',
       templateUrl: 'layout/noauth.html'
 
-    .state 'auth',
+    .state 'app',
       url: '',
-      templateUrl: 'layout/auth.html'
+      templateUrl: 'layout/app.html'
       resolve:
         session: (Auth, $state) ->
           Auth.currentUser().catch (error) ->
@@ -43,19 +43,69 @@ app.config ($stateProvider, $locationProvider, $urlRouterProvider) ->
       url: '/',
       template: 'No Auth Root'
       controller: ($state) ->
-        $state.go 'auth.app',
+        $state.go 'app.dashboard',
 
     .state 'noauth.login',
       url: '/login',
       template: 'Login'
 
-    .state 'auth.addUser',
-      url: '/add-user',
-      template: 'add user'
+    .state 'app.users',
+      url: '/users',
+      views:
+        menu:
+          templateUrl: 'pages/users/modules/menu.html'
+        main:
+          templateUrl: 'pages/users/index.html'
 
-    .state 'auth.app',
-      url: '/app',
-      template: 'App Root'
+    .state 'app.users#new',
+      url: '/users-new',
+      templateUrl: 'pages/users/new.html'
+
+    .state 'app.users#profile',
+      url: '/users-profile',
+      templateUrl: 'pages/users/profile.html'
+
+
+    .state 'app.properties',
+      url: '/properties',
+      views:
+        menu:
+          templateUrl: 'pages/properties/modules/menu.html'
+        main:
+          templateUrl: 'pages/properties/index.html'
+
+    .state 'app.reports',
+      url: '/reports',
+      views:
+        menu:
+          templateUrl: 'pages/reports/modules/menu.html'
+        main:
+          templateUrl: 'pages/reports/index.html'
+
+    .state 'app.dashboard',
+      url: '/dashboard',
+      views:
+        menu:
+          templateUrl: 'pages/dashboard/modules/menu.html'
+        main:
+          templateUrl: 'pages/dashboard/index.html'
+
+    .state 'app.map',
+      url: '/map',
+      views:
+        menu:
+          templateUrl: 'pages/map/modules/menu.html'
+        main:
+          templateUrl: 'pages/map/index.html'
+
+    .state 'app.settings',
+      url: '/settings',
+      views:
+        menu:
+          templateUrl: 'pages/settings/modules/menu.html'
+        main:
+          templateUrl: 'pages/settings/index.html'
+
 
     .state 'layout',
       url: '/layout',
