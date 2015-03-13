@@ -37,6 +37,7 @@
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
     "lazypipe": "^0.2.2",
+    "mold-source-map": "^0.3.0",
     "rekuire": "^0.1.9",
     "run-sequence": "^1.0.2",
     "sass": "^0.5.0",

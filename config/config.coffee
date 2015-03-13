@@ -36,9 +36,11 @@ module.exports =
 
     sass_loadpath: [
       "app/styles/lib/"
-     # "bower_components/bootstrap-sass/lib/"
-     # "bower_components/bourbon/dist/"
-     # "bower_components/"
+      "bower_componentns/app/assets/stylesheets/"
+      "bower_components/bootstrap-sass/lib/"
+      "bower_components/bourbon/dist/"
+      "bower_components/bourbon/app/assets/stylesheets"
+      "bower_components/"
     ]
     vendor_css: bower.css
     vendor_js: bower.js
@@ -51,7 +53,7 @@ module.exports =
 
   output:
     root: "public"
-    index: "public/index.html"
+    index: "index.html"
 
     assets:
       js: 'js',

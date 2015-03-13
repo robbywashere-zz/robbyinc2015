@@ -47,7 +47,7 @@ spawn = require('child_process').spawn
 del = require 'del'
 
 $error_handler = (err) ->
-  gutil.log err
+  gutil.log err.message
   @emit 'end'
 
 
@@ -56,7 +56,8 @@ $print = through.obj (file,enc,cb) ->
   @push file
   do cb
 
-$js_dest = -> gulp.dest path.join($config.output.root, $config.output.assets.js)
+$js_dest = ->
+  new gulp.dest(path.join($config.output.root, $config.output.assets.js))
 
 $css_dest = -> gulp.dest path.join($config.output.root, $config.output.assets.css)
 
@@ -79,8 +80,10 @@ $css_compiled_min = ->
   gulp.src(src, read: false)
 
 
+
 $bfy = -> new through.obj (file,enc,cb) ->
-  browserify file
+  browserify(file, { debug: true, baseDir: 'app' })
+  .transform('coffeeify')
   .bundle (err,src) =>
  	  if err
       @emit 'error', err
@@ -194,8 +197,8 @@ gulp.task 'config', ->
 gulp.task 'styles:sass', ->
   gulp.src $config.input.sass
   .pipe do sourcemaps.init
-  .pipe sass indentedSyntax: true
-  .on 'error', $error_handler
+  .pipe sass(indentedSyntax: true, includePaths: $config.input.sass_loadpath)
+  .on 'error', (err) -> $error_handler.call(@, message: err.toString())
   .pipe do sourcemaps.write
   .pipe rename($config.output.compiled.sass)
   .pipe do $css_dest
@@ -203,17 +206,17 @@ gulp.task 'styles:sass', ->
 
 
 gulp.task 'scripts:coffee', ->
-  gulp.src $config.input.coffee
+  gulp.src $config.input.coffee, base: 'app'
   .pipe do sourcemaps.init
   .pipe concat $config.output.compiled.coffee
   .pipe coffee bare: true
+  .on 'error', (err) -> $error_handler.call(@, message: err.toString())
+  .pipe do $bfy
   .on 'error', $error_handler
   .pipe do ng_annotate
   .on 'error', $error_handler
-  .pipe do $bfy
-  .on 'error', $error_handler
-  .pipe do sourcemaps.write
   .pipe gulp.dest path.join($config.output.root, $config.output.assets.js)
+  .pipe do sourcemaps.write
 
 
 gulp.task 'scripts:vendor', ->
@@ -227,9 +230,15 @@ gulp.task 'scripts:vendor', ->
 
 
 gulp.task "serve", ->
+  assets = new RegExp "^/(#{(value for key, value of $config.output.assets).join('|')})"
   browser_sync
     server:
       baseDir: $config.output.root
+      middleware: (req, res, next) ->
+        $config.output.assets
+        req.url = "/#{$config.output.index}" unless assets.test(req.url)
+        next()
+
     port: 8888
     open: false
 
