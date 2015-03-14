@@ -134,6 +134,7 @@ gulp.task 'bower:info', ->
   console.log gutil.colors.magenta("Bower excluding:")
   console.log gutil.colors.red(excludes.join("\n")), "\n"
 
+
   
 
 gulp.task 'default', (cb) ->

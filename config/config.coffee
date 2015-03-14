@@ -36,11 +36,9 @@ module.exports =
 
     sass_loadpath: [
       "app/styles/lib/"
-      #"bower_components/app/assets/stylesheets/"
+      "bower_components/neat/app/assets/stylesheets"
       "bower_components/bootstrap-sass/vendor/assets/stylesheets"
       "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap"
-      #"bower_components/bootstrap-sass/lib/"
-      #"bower_components/bourbon/dist/"
       "bower_components/bourbon/app/assets/stylesheets"
       "bower_components/"
     ]
