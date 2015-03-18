@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engine": "node 0.12.0",
   "author": "robbywshere",
   "license": "ISC",
   "devDependencies": {
@@ -14,6 +15,7 @@
     "coffee-script": "^1.9.1",
     "coffeeify": "^1.0.0",
     "del": "^1.1.1",
+    "glob": "^5.0.3",
     "gulp": "^3.8.11",
     "gulp-angular-templatecache": "^1.5.0",
     "gulp-browserify": "^0.5.1",
@@ -37,6 +39,7 @@
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
     "lazypipe": "^0.2.2",
+    "path": "^0.11.14",
     "rekuire": "^0.1.9",
     "run-sequence": "^1.0.2",
     "sass": "^0.5.0",

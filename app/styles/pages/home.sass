@@ -1,0 +1,67 @@
+@import '../lib/layout'
+
+//decoration code
+
+
+
+
+
+//layout code?
+body
+  header
+    @include outer-container
+    margin: auto
+    width: 100%
+    position: relative
+
+    section
+      line-height: 2rem;
+      vertical-align: middle;
+      margin: 0
+      padding: 0
+      display: inline-block
+    & > section
+      padding-right: 2rem
+
+
+
+
+
+
+body
+  .flush-container
+    padding-top: 5rem
+    width: 100%
+    @include linear-gradient(#1e5799, #FFF)
+    header
+      color: #FFF
+
+img.me
+  border-radius: 100%
+  border: 5px solid #FFF
+  padding: 5px
+
+nav 
+  .myLogo
+    @extend .fontawesome
+    @extend .fontawesome-paperclip
+    &:before
+      font-size: 3rem
+      line-height: 3rem
+.title
+  position: relative
+  h1
+    font-weight: bold
+  div
+    display:inline-block
+
+.mission
+  text-align: center
+  color: #CECEFF
+      
+
+.detail-boxes
+  @include outer-container
+  margin-top: 4rem
+  section
+    @include span-columns(4)

@@ -22,9 +22,7 @@ module.exports =
 
   input:
     index: "app/index.jade"
-    img:  "app/static/img/*"
-    fonts: "app/fonts/*"
-    sprites: "app/static/sprites/*"
+    assets: "app/assets/{**/*,*}"
 
     coffee: [
       "app/scripts/*.coffee"
@@ -45,25 +43,22 @@ module.exports =
     vendor_css: bower.css
     vendor_js: bower.js
 
+    data: 'app/templates/data/pages'
+
     templates: [
-      "app/templates/*.jade"
-      "app/templates/**/*.jade"
-      "!app/templates/lib/**"
-      "!app/templates/_*.jade"
-      "!app/templates/**/_*.jade"
+      'app/templates/pages/**/*.jade',
+      'app/templates/pages/*.jade'
     ]
+      
 
   output:
     root: "public"
     index: "index.html"
 
     assets:
-      js: 'js',
-      fonts: 'fonts',
-      css: 'css',
-      img: 'img',
-      sprites: 'img/sprites'
-      static: 'static'
+      js: 'public/assets/js',
+      css: 'public/assets/css',
+      root: 'public/assets'
 
     build:
       js: "build.js"
